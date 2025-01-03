@@ -12,7 +12,7 @@
 
 ## Graphical Abstract
 
-![Graphical Abstract]("D:\fahim_github_repo\gbdtsvm\Figures\Graphical_Abstract.png")
+![Graphical Abstract](https://github.com/mariamuna04/gbdtsvm/blob/main/Figures/Graphical_Abstract.png?raw=true)
 
 ---
 
