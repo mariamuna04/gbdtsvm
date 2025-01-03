@@ -110,7 +110,9 @@ The **MDRF Dataset** consists of the following files:
     - Top 10 associations for 9 diseases are verified.
 
 - **Outputs**:
-  - `mdrf_unknown_true_svm.txt`: List of prediction scores for unknown pairs.
+  - `unknown_true_svm.txt` or `unknown_true_svm.csv`: List of prediction scores for unknown pairs.
+  - `unknown_true_75_svm.csv`: List of prediction scores for unknown pairs having prediction score greater than 0.75.
+  
 
 ---
 
