@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 def calculate_KS(A, rm):
@@ -31,9 +32,17 @@ def calculate_rm(A):
 
     return rm
 
-# Example usage
+
 # Assuming A is the binary association matrix with snoRNAs as rows and diseases as columns
-ksd = "MDRF_Data/known_snoRNA_disease.csv"
+# Define input and output directories
+input_data_dir = "data"
+output_dir = "results"
+# Ensure the output directory exists
+os.makedirs(output_dir, exist_ok=True)
+
+# Set the input file path
+ksd = os.path.join(input_data_dir, "known_snoRNA_disease.csv")  # Kernel similarity disease
+
 #load ksd csv file
 IP_matrix = np.loadtxt(ksd, delimiter=",")
 
@@ -44,4 +53,8 @@ print("r_m:", rs)
 print("KS matrix:")
 print(KS_matrix)
 
-np.savetxt("MDRF_output/KS_matrix.csv", KS_matrix, delimiter=",")
+# Save the KD matrix to a CSV file in the output directory
+output_file = os.path.join(output_dir, "KS_matrix.csv")
+np.savetxt(output_file, KS_matrix, delimiter=",")
+print(f"KS matrix successfully saved to: {output_file}")
+
