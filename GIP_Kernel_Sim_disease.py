@@ -1,3 +1,4 @@
+import os
 import numpy as np
 
 def calculate_KD(A, rd):
@@ -32,10 +33,16 @@ def calculate_rd(A):
 
     return rd
 
-# Example usage
-# Assuming IP_matrix is a numpy array where each row represents IP(d(i))
 
-ksd = "MDRF_Data/known_snoRNA_disease.csv" #ksd = kernel similarity disease
+# Assuming IP_matrix is a numpy array where each row represents IP(d(i))
+# Define input and output directories
+input_data_dir = "data"
+output_dir = "results"
+# Ensure the output directory exists
+os.makedirs(output_dir, exist_ok=True)
+
+# Set the input file path
+ksd = os.path.join(input_data_dir, "known_snoRNA_disease.csv")  # Kernel similarity disease
 
 IP_matrix = np.loadtxt(ksd, delimiter=",")
 
@@ -46,7 +53,9 @@ print("r_d:", rd)
 print("KD matrix:")
 print(KD_matrix)
 
-#convert KD matrix to csv file
-np.savetxt("MDRF_output/KD_matrix.csv", KD_matrix, delimiter=",")
+# Save the KD matrix to a CSV file in the output directory
+output_file = os.path.join(output_dir, "KD_matrix.csv")
+np.savetxt(output_file, KD_matrix, delimiter=",")
+print(f"KD matrix successfully saved to: {output_file}")
 
 
