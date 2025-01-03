@@ -118,7 +118,7 @@ We have 5 code files for different tasks where the prediction score is generated
 ---
 
 ## Example
-
+GBDTSVM expects 5 inputs as csv for association predictions. However, what if a dataset has different structure? For such datasets, we show this examples which takes another datasets and predicts for association using our proposed method.
 To train the GBDTSVM model:
 
 ```bash
