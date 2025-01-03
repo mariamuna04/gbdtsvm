@@ -50,7 +50,7 @@ GBDTSVM expects 5 information about the datasets in csv format consists of the f
 - **Diseases-to-Diseases Similarity**: `disease_similarity.csv`
 - **snoRNA Name**: `snoRNA_name.csv`
 - **snoRNA Features**: `snoRNA_features.csv`
-- **Known Associations between snoRNA and Diseases**: `known_snoRNA_disease.csv`
+- **Known Associations between snoRNA and Diseases**: `known_snoRNA_disease.csv` (**where 1 indicates there is an association between the snoRNA and disease, 0 indicates the association is unknown between that snoRNA and disease.**)
 
 ### Code Descriptions
 We have 5 code files for different tasks where the prediction score is generated using `GBDTSVM.py` file and other 4 code files are used to prepare the final datasets that would be used as inputs in the `GBDTSVM.py` file.
