@@ -44,7 +44,7 @@
 
 ### Dataset Descriptions
 
-The **MDRF Dataset** consists of the following files:
+GBDTSVM expects 5 information about the datasets in csv format consists of the following files (**csv file name provided below according to our datasets for MDRF datasets mentioned in our paper**):
 
 - **Diseases Name**: `disease_name.csv`
 - **Diseases-to-Diseases Similarity**: `disease_similarity.csv`
