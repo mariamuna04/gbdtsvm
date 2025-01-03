@@ -53,6 +53,7 @@ GBDTSVM expects 5 information about the datasets in csv format consists of the f
 - **Known Associations between snoRNA and Diseases**: `known_snoRNA_disease.csv`
 
 ### Code Descriptions
+We have 5 code files for different tasks where the prediction score is generated using `GBDTSVM.py` file and other 4 code files are used to prepare the final datasets that would be used as inputs in the `GBDTSVM.py` file.
 
 #### `snoRNA_features_cosine_sim.py`
 - **Input**: `snoRNA_features.csv`
