@@ -29,14 +29,14 @@ os.makedirs(output_dir, exist_ok=True)
 # Read CSV files using the input data directory path
 disease_name = pd.read_csv(os.path.join(input_data_dir, 'disease_name.csv'))
 snoRNA_name = pd.read_csv(os.path.join(input_data_dir, 'snoRNA_name.csv'))
-SnoRNA_similarity = pd.read_csv(os.path.join(input_data_dir, 'IRS_matrix.csv'), header=None)
+SnoRNA_similarity = pd.read_csv(os.path.join(output_dir, 'IRS_matrix.csv'), header=None)
 known_association = pd.read_csv(os.path.join(input_data_dir, 'known_snoRNA_disease.csv'), header=None)
-disease_similarity = pd.read_csv(os.path.join(input_data_dir, 'IDS_matrix.csv'), header=None)
+disease_similarity = pd.read_csv(os.path.join(output_dir, 'IDS_matrix.csv'), header=None)
 
 
-disease_semantic_similarity = np.zeros(disease_similarity.shape) ## 111 x 111
-snoRNA_functional_similarity = np.zeros(SnoRNA_similarity.shape) ## 335 x 335
-adjacency_matrix = np.zeros(known_association.shape) ## 335 x 111
+disease_semantic_similarity = np.zeros(disease_similarity.shape) 
+snoRNA_functional_similarity = np.zeros(SnoRNA_similarity.shape) 
+adjacency_matrix = np.zeros(known_association.shape) 
 
 
 # csv to array disease_semantic_similarity
@@ -44,8 +44,7 @@ for i in range(len(disease_name)):
     for j in range(len(disease_name)):
         disease_semantic_similarity[i, j] = disease_similarity.iloc[i, j]
 
-# print(known_association.shape[0]) # snoRNAs --> 335
-# print(known_association.shape[1]) # diseases --> 111
+
 # csv to array adjacency_matrix
 for i in range(known_association.shape[0]):
     for j in range(known_association.shape[1]):
@@ -72,9 +71,6 @@ for z in range(len(unknown)):
     b = snoRNA_functional_similarity[unknown[z][0], :].tolist()
     q = a + b
     major.append(q)
-
-print(len(a))
-print(len(b))
 
 
 kmeans = KMeans(n_clusters=23, random_state=0).fit(major)
@@ -204,15 +200,6 @@ param_grid = {'SVM__C': [0.1, 1, 10, 100], 'SVM__gamma': [1, 0.1, 0.01, 0.001]}
 grid = GridSearchCV(pipeline, param_grid, cv=5)
 
 # # Train the classifier
-# grid.fit(OHE.transform(GBDT.apply(X_train)[:, :, 0]), y_train)
-#
-# predicted_probs = grid.predict_proba(OHE.transform(GBDT.apply(X_test)[:, :, 0]))[:, 1]
-# # roc_curve calculates the true positive rate and false positive rate for different thresholds
-# fpr, tpr, thresholds = roc_curve(y_test, predicted_probs)
-# roc_auc = auc(fpr, tpr)
-# print("Test Set ROC AUC:", roc_auc)
-
-
 # using 5 fold cross validation:
 
 stratified_k_fold = StratifiedKFold(n_splits=5)
@@ -263,7 +250,7 @@ for train_index, test_index in stratified_k_fold.split(selected_data_np, selecte
 
 
 f1 = f1_score(y_test, predicted)
-print("F1 Score:", f1)
+print("Final F1 Score:", f1)
 
 
 # Plotting ROC curve
