@@ -1,4 +1,6 @@
+import os
 import numpy as np
+
 def integrate_disease_similarity(KD, SS):
     nd = KD.shape[0]
     SD = np.zeros((nd, nd))
