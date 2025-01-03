@@ -58,7 +58,7 @@ We have 5 code files for different tasks where the prediction score is generated
 #### `snoRNA_features_cosine_sim.py`
 - **Input**: `snoRNA_features.csv`
 - **Output**: `snoRNA_similarity.csv`
-- **Description**: Calculates the cosine similarity between snoRNA features.
+- **Description**: Calculates the cosine similarity between snoRNA features. **If your datasets already have similarity score between the snoRNAs, then you do not need to use this code.**
 
 #### `GIP_Kernel_Sim_disease.py`
 - **Input**: `known_snoRNA_disease.csv`
@@ -125,8 +125,8 @@ To train the GBDTSVM model:
 python GBDTSVM.py
 ```
 
-Outputs will be saved in the `MDRF_output/` directory. For example:
-- `mdrf_unknown_true_svm.txt`: Prediction scores for unknown pairs.
+Outputs will be saved in the `results/` directory. For example:
+- `unknown_true_svm.txt`: Prediction scores for unknown pairs.
 
 ---
 
