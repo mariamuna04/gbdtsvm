@@ -31,6 +31,7 @@ SnoRNA_similarity = pd.read_csv(os.path.join(output_dir, 'IRS_matrix.csv'), head
 known_association = pd.read_csv(os.path.join(input_data_dir, 'known_snoRNA_disease.csv'), header=None)
 disease_similarity = pd.read_csv(os.path.join(output_dir, 'IDS_matrix.csv'), header=None)
 
+print(f"Starting the GBDT association framework for {len(disease_name)} diseases and {len(snoRNA_name)} snoRNAs")
 
 disease_semantic_similarity = np.zeros(disease_similarity.shape) 
 snoRNA_functional_similarity = np.zeros(SnoRNA_similarity.shape) 
@@ -53,7 +54,7 @@ for i in range(len(snoRNA_name)):
     for j in range(len(snoRNA_name)):
         snoRNA_functional_similarity[i, j] = SnoRNA_similarity.iloc[i, j]
 
-
+print("Seperating the known and unknown associations..")
 unknown = []
 known = []
 for x in range(known_association.shape[0]):
@@ -70,7 +71,7 @@ for z in range(len(unknown)):
     q = a + b
     major.append(q)
 
-
+print("Staring the clustering based sampling for unknown i.e. negative associations")
 kmeans = KMeans(n_clusters=23, random_state=0).fit(major)
 center = kmeans.cluster_centers_
 labels = kmeans.labels_ # label is given to all the datapoints but within 1 to 20
@@ -133,7 +134,7 @@ for i in range(len(labels)):
         disease_rna_tup[22].append((unknown[i][0], unknown[i][1]))
 
 
-
+print("Final datasets are being prepared now..")
 sampled_disease_rna_tup = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 for i in range(len(disease_rna_tup)):
     # print(int((len(disease_rna_tup[i])/len(labels)) * len(known)))
@@ -174,6 +175,7 @@ selected_label_np = np.array(selected_y)
 
 ## Data prepation ends here before training the model--------------------------------
 
+print("GBDTSVM classifier running...")
 #### Gradient Boosting Classifier--------------------------------
 
 GBDT=GradientBoostingClassifier(n_estimators = 12,max_depth=5,min_samples_leaf=13)
@@ -286,7 +288,8 @@ plt.title('Precision-Recall Curve')
 plt.legend()
 plt.show()
 
-
+print("GBDTSVM Classifier training ends..")
+print("Predictions for unknown association now started")
 # Now predicting associations for all unknown pairs
 unknown_pair = []
 
@@ -336,4 +339,4 @@ df['Score'] = df['Score'].astype(float)
 df = df[df['Score'] >= 0.75]
 df.to_csv(file_unknown_true_75_csv_path, index=False)
 
-print(f"Output files successfully saved in: {output_dir}")
+print(f"Unknown association between the snoRNA-disease pairs are predicted and save in the output files successfully, saved in: {output_dir}")
