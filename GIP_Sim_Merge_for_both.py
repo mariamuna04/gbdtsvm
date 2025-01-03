@@ -28,21 +28,38 @@ def integrate_snorna_similarity(KS, FS):  #KS = Kernel Similarity and FS= Functi
 
     return SM
 
+# Define input and output directories
+input_data_dir = "data"
+output_dir = "results"
+# Ensure the output directory exists
+os.makedirs(output_dir, exist_ok=True)
+
+# Set the input file path
+KD_path = os.path.join(output_dir, "KD_matrix.csv")  
+SS_path = os.path.join(input_data_dir, "disease_similarity.csv")  
+KS_path = os.path.join(output_dir, "KS_matrix.csv")  
+FS_path = os.path.join(output_dir, "snoRNA_similarity.csv")  
+
+
 # 2 similarity metrices of disease
-KD = np.loadtxt("MDRF_output/KD_matrix.csv", delimiter=",")
-SS = np.loadtxt("MDRF_Data/disease_similarity.csv", delimiter=",")
+KD = np.loadtxt(KD_path, delimiter=",")
+SS = np.loadtxt(SS_path, delimiter=",")
 # 2 similarity metrices of snoRNAs
-KS = np.loadtxt("MDRF_output/KS_matrix.csv", delimiter=",")
-FS = np.loadtxt("MDRF_output/snoRNA_similarity.csv", delimiter=",")
+KS = np.loadtxt(KS_path, delimiter=",")
+FS = np.loadtxt(FS_path, delimiter=",")
 
 
 IDS = integrate_disease_similarity(KD, SS)
 IRS = integrate_snorna_similarity(KS, FS)
 
+IDS_file = os.path.join(output_dir, "IDS_matrix.csv")
+IRS_file = os.path.join(output_dir, "IRS_matrix.csv")
+
 print("Integrated disease similarity (SD):")
 print(IDS)
-np.savetxt("MDRF_output/IDS_matrix.csv", IDS, delimiter=",")
+np.savetxt(IDS_file, IDS, delimiter=",")
 
 print("Integrated snoRNA similarity (SM):")
 print(IRS)
-np.savetxt("MDRF_output/IRS_matrix.csv", IRS, delimiter=",")
+np.savetxt(IRS_file, IRS, delimiter=",")
+print(f"IDS and IRD matrix successfully saved to: {output_dir}")
