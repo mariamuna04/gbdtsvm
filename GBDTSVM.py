@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import pandas as pd
+import os
 from matplotlib import pyplot as plt
 from numpy import interp
 from sklearn.cluster import KMeans
@@ -18,11 +19,20 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score
 
 
-disease_name = pd.read_csv('MDRF_Data/disease_name.csv')
-snoRNA_name = pd.read_csv('MDRF_Data/snoRNA_name.csv')
-SnoRNA_similarity = pd.read_csv('MDRF_output/IRS_matrix.csv', header=None)
-known_association = pd.read_csv('MDRF_Data/known_snoRNA_disease.csv', header=None)
-disease_similarity = pd.read_csv('MDRF_output/IDS_matrix.csv', header=None)
+# Define input and output directories
+input_data_dir = "data"
+output_dir = "results"
+
+# Ensure the output directory exists
+os.makedirs(output_dir, exist_ok=True)
+
+# Read CSV files using the input data directory path
+disease_name = pd.read_csv(os.path.join(input_data_dir, 'disease_name.csv'))
+snoRNA_name = pd.read_csv(os.path.join(input_data_dir, 'snoRNA_name.csv'))
+SnoRNA_similarity = pd.read_csv(os.path.join(input_data_dir, 'IRS_matrix.csv'), header=None)
+known_association = pd.read_csv(os.path.join(input_data_dir, 'known_snoRNA_disease.csv'), header=None)
+disease_similarity = pd.read_csv(os.path.join(input_data_dir, 'IDS_matrix.csv'), header=None)
+
 
 disease_semantic_similarity = np.zeros(disease_similarity.shape) ## 111 x 111
 snoRNA_functional_similarity = np.zeros(SnoRNA_similarity.shape) ## 335 x 335
@@ -318,7 +328,7 @@ sorted_class_index = np.argsort(-unknown_pair_true_class_matrix).tolist()
 sorted_class_index = sorted_class_index[0]
 # print(len(sorted_class_index))
 
-file_unknown_true = open("MDRF_output/mdrf_unknown_true_svm.txt", 'w')
+file_unknown_true = open("results/unknown_true_svm.txt", 'w')
 file_unknown_true.writelines(['disease', '\t', 'SnoRNA', '\t', 'Score', '\n'])
 for i in range(len(sorted_class_index)):
     file_unknown_true.writelines([str(unknown[sorted_class_index[i]][1]), '\t', str(unknown[sorted_class_index[i]][0]), '\t', str(unknown_pair_true_class[sorted_class_index[i]]), '\n'])
@@ -326,12 +336,12 @@ file_unknown_true.close()
 
 
 # convert unknown_true.txt into csv
-df = pd.read_csv('MDRF_output/mdrf_unknown_true_svm.txt', delimiter='\t')
-df.to_csv('MDRF_output/mdrf_unknown_true_svm.csv', index=False)
+df = pd.read_csv('results/unknown_true_svm.txt', delimiter='\t')
+df.to_csv('results/unknown_true_svm.csv', index=False)
 
 
 # created another csv file where only the row having greater or equal 0.75 value will be stored
-df = pd.read_csv('MDRF_output/mdrf_unknown_true_svm.csv')
+df = pd.read_csv('results/unknown_true_svm.csv')
 df['Score'] = df['Score'].astype(float)
 df = df[df['Score'] >= 0.75]
-df.to_csv('MDRF_output/mdrf_unknown_true_75_svm.csv', index=False)
+df.to_csv('results/unknown_true_75_svm.csv', index=False)
