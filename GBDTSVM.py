@@ -18,11 +18,11 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import f1_score
 
 
-disease_name = pd.read_csv('Data/disease_name.csv')
-snoRNA_name = pd.read_csv('Data/snoRNA_name.csv')
-SnoRNA_similarity = pd.read_csv('Data/IRS_matrix.csv', header=None)
-known_association = pd.read_csv('Data/known_snoRNA_disease.csv', header=None)
-disease_similarity = pd.read_csv('Data/IDS_matrix.csv', header=None)
+disease_name = pd.read_csv('MDRF_Data/disease_name.csv')
+snoRNA_name = pd.read_csv('MDRF_Data/snoRNA_name.csv')
+SnoRNA_similarity = pd.read_csv('MDRF_output/IRS_matrix.csv', header=None)
+known_association = pd.read_csv('MDRF_Data/known_snoRNA_disease.csv', header=None)
+disease_similarity = pd.read_csv('MDRF_output/IDS_matrix.csv', header=None)
 
 disease_semantic_similarity = np.zeros(disease_similarity.shape) ## 111 x 111
 snoRNA_functional_similarity = np.zeros(SnoRNA_similarity.shape) ## 335 x 335
@@ -62,6 +62,9 @@ for z in range(len(unknown)):
     b = snoRNA_functional_similarity[unknown[z][0], :].tolist()
     q = a + b
     major.append(q)
+
+print(len(a))
+print(len(b))
 
 
 kmeans = KMeans(n_clusters=23, random_state=0).fit(major)
@@ -129,11 +132,14 @@ for i in range(len(labels)):
 
 sampled_disease_rna_tup = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]
 for i in range(len(disease_rna_tup)):
+    # print(int((len(disease_rna_tup[i])/len(labels)) * len(known)))
     sampled_disease_rna_tup[i] = random.sample(disease_rna_tup[i], int((len(disease_rna_tup[i])/len(labels)) * len(known)))
 
 dataset = []
 for rna in range(known_association.shape[0]):
+    # print(f"rna val:{rna}")
     for disease in range(known_association.shape[1]):
+        # print(f"disease val:{disease}")
         for i in range(len(sampled_disease_rna_tup)):
             if (rna, disease) in sampled_disease_rna_tup[i]:
                 dataset.append((rna, disease))
@@ -176,8 +182,6 @@ tprs = []
 aucs = []
 mean_fpr = np.linspace(0,1,100)
 
-# Assuming xs is your input data-snoRNA-disease and ys is your target variable
-# X_train, X_test, y_train, y_test = train_test_split(selected_data_np,selected_label_np, test_size=0.2, random_state=42)
 
 SVM = svm.SVC(kernel='rbf', probability=True)
 
@@ -287,47 +291,47 @@ plt.title('Precision-Recall Curve')
 plt.legend()
 plt.show()
 
-#
-# # Now predicting associations for all unknown pairs
-# unknown_pair = []
-#
-# for data in unknown:
-#     a1 = disease_semantic_similarity[data[1], :].tolist()
-#     b1 = snoRNA_functional_similarity[data[0], :].tolist()
-#     q1 = a1 + b1
-#     unknown_pair.append(q1)
 
-# #so far we have used certain number of samples from all the clustered unknown pairs, but now will predict for all the unknown pairs whether they have association or not
-# # here x1 contains the concatanated semantic similarity of diseases and functional similarity of snoRNAs of all unknown pairs
-#
-# predicted_probabilities_all_unknowns = grid.predict_proba(OHE.transform(GBDT.apply(unknown_pair)[:, :, 0]))
-# unknown_pair_true_class = predicted_probabilities_all_unknowns[:, 1].tolist()
-#
-# # here I have sorted the true class of all unknown pairs in descending order.
-# unknown_pair_true_class_np = np.array(unknown_pair_true_class)
-# sorted_probabilities = -np.sort(-unknown_pair_true_class_np, axis=None, kind='heapsort')
-#
-#
-# unknown_pair_true_class_matrix = np.matrix(unknown_pair_true_class)
-# sorted_class_index = np.argsort(-unknown_pair_true_class_matrix).tolist()
-# # print(len(sorted_class_index))
-# sorted_class_index = sorted_class_index[0]
-# # print(len(sorted_class_index))
-#
-# file_unknown_true = open("mdrf_unknown_true_svm.txt", 'w')
-# file_unknown_true.writelines(['disease', '\t', 'SnoRNA', '\t', 'Score', '\n'])
-# for i in range(len(sorted_class_index)):
-#     file_unknown_true.writelines([str(unknown[sorted_class_index[i]][1]), '\t', str(unknown[sorted_class_index[i]][0]), '\t', str(unknown_pair_true_class[sorted_class_index[i]]), '\n'])
-# file_unknown_true.close()
-#
-#
-# # convert unknown_true.txt into csv
-# df = pd.read_csv('mdrf_unknown_true_svm.txt', delimiter='\t')
-# df.to_csv('mdrf_unknown_true_svm.csv', index=False)
-#
-#
-# # created another csv file where only the row having greater or equal 0.75 value will be stored
-# df = pd.read_csv('MDRF-Unknown-Results/mdrf_unknown_true_svm.csv')
-# df['Score'] = df['Score'].astype(float)
-# df = df[df['Score'] >= 0.75]
-# df.to_csv('mdrf_unknown_true_75_svm.csv', index=False)
+# Now predicting associations for all unknown pairs
+unknown_pair = []
+
+for data in unknown:
+    a1 = disease_semantic_similarity[data[1], :].tolist()
+    b1 = snoRNA_functional_similarity[data[0], :].tolist()
+    q1 = a1 + b1
+    unknown_pair.append(q1)
+
+#so far we have used certain number of samples from all the clustered unknown pairs, but now will predict for all the unknown pairs whether they have association or not
+# here x1 contains the concatanated semantic similarity of diseases and functional similarity of snoRNAs of all unknown pairs
+
+predicted_probabilities_all_unknowns = grid.predict_proba(OHE.transform(GBDT.apply(unknown_pair)[:, :, 0]))
+unknown_pair_true_class = predicted_probabilities_all_unknowns[:, 1].tolist()
+
+# here I have sorted the true class of all unknown pairs in descending order.
+unknown_pair_true_class_np = np.array(unknown_pair_true_class)
+sorted_probabilities = -np.sort(-unknown_pair_true_class_np, axis=None, kind='heapsort')
+
+
+unknown_pair_true_class_matrix = np.matrix(unknown_pair_true_class)
+sorted_class_index = np.argsort(-unknown_pair_true_class_matrix).tolist()
+# print(len(sorted_class_index))
+sorted_class_index = sorted_class_index[0]
+# print(len(sorted_class_index))
+
+file_unknown_true = open("MDRF_output/mdrf_unknown_true_svm.txt", 'w')
+file_unknown_true.writelines(['disease', '\t', 'SnoRNA', '\t', 'Score', '\n'])
+for i in range(len(sorted_class_index)):
+    file_unknown_true.writelines([str(unknown[sorted_class_index[i]][1]), '\t', str(unknown[sorted_class_index[i]][0]), '\t', str(unknown_pair_true_class[sorted_class_index[i]]), '\n'])
+file_unknown_true.close()
+
+
+# convert unknown_true.txt into csv
+df = pd.read_csv('MDRF_output/mdrf_unknown_true_svm.txt', delimiter='\t')
+df.to_csv('MDRF_output/mdrf_unknown_true_svm.csv', index=False)
+
+
+# created another csv file where only the row having greater or equal 0.75 value will be stored
+df = pd.read_csv('MDRF_output/mdrf_unknown_true_svm.csv')
+df['Score'] = df['Score'].astype(float)
+df = df[df['Score'] >= 0.75]
+df.to_csv('MDRF_output/mdrf_unknown_true_75_svm.csv', index=False)
