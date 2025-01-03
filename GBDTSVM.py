@@ -11,11 +11,9 @@ from sklearn import svm
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
-
 from sklearn.metrics import precision_recall_curve, roc_curve, auc, confusion_matrix, accuracy_score, classification_report
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
-
 from sklearn.metrics import f1_score
 
 
@@ -315,20 +313,27 @@ sorted_class_index = np.argsort(-unknown_pair_true_class_matrix).tolist()
 sorted_class_index = sorted_class_index[0]
 # print(len(sorted_class_index))
 
-file_unknown_true = open("results/unknown_true_svm.txt", 'w')
-file_unknown_true.writelines(['disease', '\t', 'SnoRNA', '\t', 'Score', '\n'])
-for i in range(len(sorted_class_index)):
-    file_unknown_true.writelines([str(unknown[sorted_class_index[i]][1]), '\t', str(unknown[sorted_class_index[i]][0]), '\t', str(unknown_pair_true_class[sorted_class_index[i]]), '\n'])
-file_unknown_true.close()
+# Write unknown true results to a text file
+file_unknown_true_path = os.path.join(output_dir, "unknown_true_svm.txt")
+with open(file_unknown_true_path, 'w') as file_unknown_true:
+    file_unknown_true.writelines(['disease', '\t', 'SnoRNA', '\t', 'Score', '\n'])
+    for i in range(len(sorted_class_index)):
+        file_unknown_true.writelines([
+            str(unknown[sorted_class_index[i]][1]), '\t',
+            str(unknown[sorted_class_index[i]][0]), '\t',
+            str(unknown_pair_true_class[sorted_class_index[i]]), '\n'
+        ])
 
+# Convert unknown_true_svm.txt into a CSV file
+file_unknown_true_csv_path = os.path.join(output_dir, "unknown_true_svm.csv")
+df = pd.read_csv(file_unknown_true_path, delimiter='\t')
+df.to_csv(file_unknown_true_csv_path, index=False)
 
-# convert unknown_true.txt into csv
-df = pd.read_csv('results/unknown_true_svm.txt', delimiter='\t')
-df.to_csv('results/unknown_true_svm.csv', index=False)
-
-
-# created another csv file where only the row having greater or equal 0.75 value will be stored
-df = pd.read_csv('results/unknown_true_svm.csv')
+# Create another CSV file where only rows with Score >= 0.75 are stored
+file_unknown_true_75_csv_path = os.path.join(output_dir, "unknown_true_75_svm.csv")
+df = pd.read_csv(file_unknown_true_csv_path)
 df['Score'] = df['Score'].astype(float)
 df = df[df['Score'] >= 0.75]
-df.to_csv('results/unknown_true_75_svm.csv', index=False)
+df.to_csv(file_unknown_true_75_csv_path, index=False)
+
+print(f"Output files successfully saved in: {output_dir}")
