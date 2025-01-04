@@ -123,9 +123,9 @@ To train the GBDTSVM model:
 
 For example, we perform GBDTSVM on datasets curated from MNDR V3.1 in the work of Sun et al. ([https://github.com/linDing-groups/PSnoD](https://github.com/linDing-groups/PSnoD)). 
 This dataset has 3 files that can be accessed in `examples/PSnoD-GBDTSVM/raw_data`:
-1. SnoRNA Similarity Matrix which represents the similarity between snoRNAs.
-2. Disease Similarity Matrix which represents the similarity between diseases.
-3. Association Data which contains association information based on the known snoRNA-disease associations.
+1. SnoRNA Similarity Matrix which represents the similarity between snoRNAs (`snoRNA_4mer_similarity.csv`).
+2. Disease Similarity Matrix which represents the similarity between diseases (`disease_sim_graph_filtered.csv`).
+3. Association Data which contains association information based on the known snoRNA-disease associations (`relationship_matrix_filtered.csv`).
 
 ```bash
 python GBDTSVM.py
