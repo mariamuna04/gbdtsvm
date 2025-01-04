@@ -127,6 +127,9 @@ This dataset has 3 files that can be accessed in `examples/PSnoD-GBDTSVM/raw_dat
 2. Disease Similarity Matrix which represents the similarity between diseases (`disease_sim_graph_filtered.csv`).
 3. Association Data which contains association information based on the known snoRNA-disease associations (`relationship_matrix_filtered.csv`).
 
+As GBDTSVM.py expects 5 inputs, we first format these three files according to the need of GBDTSVM Framework using `data_format.py`. Please run this python file that will save
+proper formatted files in the `examples/PSnoD-GBDTSVM/data` directory.
+
 ```bash
 python GBDTSVM.py
 ```
