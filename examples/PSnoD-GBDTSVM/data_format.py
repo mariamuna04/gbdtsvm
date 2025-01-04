@@ -19,5 +19,17 @@ SnoRNA_similarity = rna_sim.iloc[:, 1:]
 
 
 # save to csv
+disease_name_csv_path = os.path.join(output_dir, "disease_name.csv")
+disease_name.to_csv(disease_name_csv_path, index=False, header=None)
+
+snoRNA_name_csv_path = os.path.join(output_dir, "snoRNA_name.csv")
+snoRNA_name.to_csv(snoRNA_name_csv_path, index=False, header=None)
+
+known_association_csv_path = os.path.join(output_dir, "known_snoRNA_disease.csv")
+known_association.to_csv(known_association_csv_path, index=False, header=None)
+
 disease_similarity_csv_path = os.path.join(output_dir, "disease_similarity.csv")
 disease_similarity.to_csv(disease_similarity_csv_path, index=False, header=None)
+
+SnoRNA_similarity_csv_path = os.path.join(output_dir, "SnoRNA_similarity.csv")
+SnoRNA_similarity.to_csv(SnoRNA_similarity_csv_path, index=False, header=None)
