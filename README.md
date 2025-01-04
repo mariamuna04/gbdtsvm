@@ -121,6 +121,12 @@ We have 5 code files for different tasks where the prediction score is generated
 GBDTSVM expects 5 inputs as csv for association predictions. However, what if a dataset has different structure? For such datasets, we show this examples which takes another datasets and predicts for association using our proposed method.
 To train the GBDTSVM model:
 
+For example, we perform GBDTSVM on datasets curated from MNDR V3.1 in the work of Sun et al. ([https://github.com/linDing-groups/PSnoD](https://github.com/linDing-groups/PSnoD)). 
+This dataset has 3 files that can be accessed in `examples/PSnoD-GBDTSVM/data`:
+1. SnoRNA Similarity Matrix which represents the similarity between snoRNAs.
+2. Disease Similarity Matrix which represents the similarity between diseases.
+3. Association Data which contains association information based on the known snoRNA-disease associations.
+
 ```bash
 python GBDTSVM.py
 ```
