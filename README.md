@@ -128,16 +128,10 @@ This dataset has 3 files that can be accessed in `examples/PSnoD-GBDTSVM/raw_dat
 3. Association Data which contains association information based on the known snoRNA-disease associations (`relationship_matrix_filtered.csv`).
 
 As GBDTSVM.py expects 5 inputs, we first format these three files according to the need of GBDTSVM Framework using `data_format.py`. Please run this python file that will save
-proper formatted files in the `examples/PSnoD-GBDTSVM/data` directory.
+proper formatted files in the `examples/PSnoD-GBDTSVM/data` directory. Then, we can run the `GIP_Kernel_Sim_disease.py`, `GIP_Kernel_Sim_snoRNA.py`, `GIP_Sim_Merge_for_both.py` and `GBDTSVM.py` file sequentially after setting the respective input and output directory. We will get the prediction score in the `examples/PSnoD-GBDTSVM/results` folder.
 
-```bash
-python GBDTSVM.py
-```
+Please note that, `PSnoD` dataset has directory snoRNA similarity, hence we do not need to run the `snoRNA_features_cosine_sim.py` code.
 
-Outputs will be saved in the `results/` directory. For example:
-- `unknown_true_svm.txt`: Prediction scores for unknown pairs.
-
----
 
 Feel free to reach out with any questions or issues! [Ummay Maria Muna](mailto:umuna201429@bscse.uiu.ac.bd), [Fahim Hafiz](mailto:fahimhafiz@cse.uiu.ac.bd)
 
