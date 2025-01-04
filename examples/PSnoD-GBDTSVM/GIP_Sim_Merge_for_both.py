@@ -38,7 +38,7 @@ os.makedirs(output_dir, exist_ok=True)
 KD_path = os.path.join(output_dir, "KD_matrix.csv")  
 SS_path = os.path.join(input_data_dir, "disease_similarity.csv")  
 KS_path = os.path.join(output_dir, "KS_matrix.csv")  
-FS_path = os.path.join(output_dir, "snoRNA_similarity.csv")  
+FS_path = os.path.join(input_data_dir, "snoRNA_similarity.csv")  
 
 
 # 2 similarity metrices of disease
