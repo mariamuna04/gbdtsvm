@@ -136,5 +136,5 @@ Outputs will be saved in the `results/` directory. For example:
 
 ---
 
-Feel free to reach out with any questions or issues! [Ummay Maria Muna](mailto:umuna201429@bscse.uiu.ac.bd)
+Feel free to reach out with any questions or issues! [Ummay Maria Muna](mailto:umuna201429@bscse.uiu.ac.bd), [Fahim Hafiz](mailto:fahimhafiz@cse.uiu.ac.bd)
 
