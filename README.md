@@ -96,7 +96,7 @@ We have 5 code files for different tasks where the prediction score is generated
     1. Converts input CSV files into arrays.
     2. Separates known and unknown associations.
     3. Concatenates features for unknown associations (e.g., combining disease semantic similarity and snoRNA functional similarity).
-    4. Clusters unknown pairs into 23 clusters.
+    4. Clusters unknown pairs into multiple clusters.
     5. Samples unknown pairs proportionally from each cluster.
     6. Combines sampled unknown data with known data into a single dataset.
   - **Training**:
