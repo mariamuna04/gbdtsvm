@@ -105,7 +105,7 @@ We have 5 code files for different tasks where the prediction score is generated
     3. Applies one-hot encoding to the outputs of the GBDT decision tree leaf nodes.
     4. Fits the transformed data into an SVM with an RBF kernel.
     5. Trains all data and tests all unknown pairs that were not used in the training or the testing set.
-    6. Saves prediction scores (≥ 0.75).
+    6. Saves prediction scores (≥ 0.75). 
     7. Sorts prediction scores by disease.
   - **Validation**:
     - Top 10 associations for 9 diseases are verified.
