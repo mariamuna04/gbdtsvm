@@ -108,7 +108,7 @@ We have 5 code files for different tasks where the prediction score is generated
     6. Saves prediction scores (≥ 0.75). 
     7. Sorts prediction scores by disease.
   - **Validation**:
-    - Top 10 associations for 9 diseases are verified using PubMed, RNADisease, etc. database.
+    - Top associations for 12 diseases are verified using PubMed, RNADisease, etc. database.
 
 - **Outputs**:
   - `unknown_true_svm.txt` or `unknown_true_svm.csv`: List of prediction scores for unknown pairs.
