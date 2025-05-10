@@ -7,7 +7,9 @@
 - **Data Integration**: Leverages snoRNA functional similarity and disease semantic similarity with Gaussian kernel similarity measures.
 - **Performance**: Outperforms existing state-of-the-art models in terms of prediction accuracy.
 - **Validation**: Predictions validated using case studies and existing literature.
-- **paper link**: [click here](https://doi.org/10.1016/j.compbiomed.2025.110219)
+
+
+**Paper link**: [click here](https://doi.org/10.1016/j.compbiomed.2025.110219)
 
 ---
 
