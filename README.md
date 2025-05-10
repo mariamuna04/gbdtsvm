@@ -7,6 +7,7 @@
 - **Data Integration**: Leverages snoRNA functional similarity and disease semantic similarity with Gaussian kernel similarity measures.
 - **Performance**: Outperforms existing state-of-the-art models in terms of prediction accuracy.
 - **Validation**: Predictions validated using case studies and existing literature.
+- **paper link**: [click here](https://doi.org/10.1016/j.compbiomed.2025.110219)
 
 ---
 
@@ -135,3 +136,15 @@ Please note that, `PSnoD` dataset has directory snoRNA similarity, hence we do n
 
 Feel free to reach out with any questions or issues! [Ummay Maria Muna](mailto:umuna201429@bscse.uiu.ac.bd), [Fahim Hafiz](mailto:fahimhafiz@cse.uiu.ac.bd)
 
+## If you use our work, kindly cite our work!
+@article{MUNA2025110219,
+title = {GBDTSVM: Combined Support Vector Machine and Gradient Boosting Decision Tree Framework for efficient snoRNA-disease association prediction},
+journal = {Computers in Biology and Medicine},
+volume = {192},
+pages = {110219},
+year = {2025},
+issn = {0010-4825},
+doi = {https://doi.org/10.1016/j.compbiomed.2025.110219},
+url = {https://www.sciencedirect.com/science/article/pii/S0010482525005700},
+author = {Ummay Maria Muna and Fahim Hafiz and Shanta Biswas and Riasat Azim}
+}
